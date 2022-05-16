@@ -1,0 +1,5 @@
+# Ignore All JS Files
+**/*.js
+
+# Enable ESLint on these files
+!/src/**/*.js
