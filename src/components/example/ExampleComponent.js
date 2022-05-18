@@ -50,10 +50,7 @@ export default function ExampleComponent(props) {
 
   // 元件渲染時觸發, 陣列包含的變數更動會觸發 useEffect 的內容
   useEffect(() => {
-    Api.getTestData()
-
     // console.log('\x1b[36m%s\x1b[0m', '===Platform===', Platform.OS, Colors.primary)
-
     if (shouldTriggerAlert) triggerAlert()
   }, [shouldTriggerAlert])
 

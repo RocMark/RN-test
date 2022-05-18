@@ -2,7 +2,7 @@ import {
   StyleSheet, View
 } from 'react-native'
 
-export default function Template(props) {
+export default function RegisterScreen({ route, navigation }) {
   return (
     <View>
 
