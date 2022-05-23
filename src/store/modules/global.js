@@ -12,13 +12,10 @@ const store = createSlice({
   initialState,
   reducers: {
     setIsFetching: (state, action) => {
-      const { isFetching } = action.payload
-      state.isFetching = isFetching
-      console.log('\x1b[36m%s\x1b[0m', '===setIsFetching===', state.isFetching)
+      state.isFetching = action.payload
     },
     setErrorMessage: (state, action) => {
-      const { errorMessage } = action.payload
-      state.errorMessage = errorMessage
+      state.errorMessage = action.payload
     },
     clearErrorMessage: (state, action) => {
       state.errorMessage = ''

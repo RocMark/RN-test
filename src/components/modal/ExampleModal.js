@@ -6,11 +6,12 @@ import {
 import { useSelector } from 'react-redux'
 
 // Component
-import BaseModal from '../global/BaseModal'
+import BaseModal from '../base/BaseModal'
 
 /*
  * 開啟 Modal: dispatch(setActiveTarget('ExampleModal'))
  * 關閉 Modal: dispatch(clearActiveTarget())
+ * 記得要: import { setActiveTarget, clearActiveTarget } from 'modal'
 */
 
 export default function ExampleModal(props) {

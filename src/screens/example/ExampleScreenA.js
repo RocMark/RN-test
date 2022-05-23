@@ -6,7 +6,7 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 // Components
-import BaseButton from '../components/global/BaseButton'
+import BaseButton from '../../components/base/BaseButton'
 
 export default function ExampleScreenA(props) {
 

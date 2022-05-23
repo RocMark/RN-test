@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import exampleReducer from './modules/example'
 import globalReducer from './modules/global'
 import modalReducer from './modules/modal'
+import loginReducer from './modules/login'
 
 /*
  * Redux 資料：Loading  | Login | Error
@@ -15,6 +16,7 @@ const reducer = {
   global: globalReducer,
   example: exampleReducer,
   modal: modalReducer,
+  login: loginReducer,
 }
 
 const preloadedState = {

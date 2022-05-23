@@ -15,17 +15,15 @@ export default class Api {
 
   static getRequest() {
     const baseURL = 'https://rn2022-test-default-rtdb.asia-southeast1.firebasedatabase.app/'
-    const csrfToken = ''
-    const token = ''
 
-    console.log('\x1b[36m%s\x1b[0m', '===store.state===', store.state)
+    const state = store.getState()
+    const { token } = state.login
 
     const request = axios.create({
       baseURL,
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': csrfToken,
-        Authorization: `Token ${token}`
+        'X-CSRF-TOKEN': token,
       },
     })
 
@@ -35,13 +33,9 @@ export default class Api {
 
   // 設置攔截器, 統一處理回傳結果 Ex: ErrorMessage
   static _mountInterceptor(request) {
-
-    console.log('\x1b[36m%s\x1b[0m', '===_mountInterceptor===')
-
     request.interceptors.request.use(
       (config) => {
-        console.log('\x1b[36m%s\x1b[0m', '===requestUse===')
-        store.dispatch(setIsFetching({ isFetching: true }))
+        store.dispatch(setIsFetching(true))
         return config
       },
       (error) => Promise.reject(error)
@@ -49,9 +43,8 @@ export default class Api {
 
     request.interceptors.response.use(
       (response) => {
-        console.log('\x1b[36m%s\x1b[0m', '===reponseUse===')
         setTimeout(() => {
-          store.dispatch(setIsFetching({ isFetching: false }))
+          store.dispatch(setIsFetching(false))
         }, 5000)
         return response
       },
@@ -85,15 +78,19 @@ export default class Api {
   }
 
   // 測試用
-  static postTestData(params) {
-    return Api.post('/test.json', { test: 123 })
+  static test(params) {
+    return Api.get('/test.json')
   }
 
-  // 測試用
-  static getTestData(params) {
+  // 登入: 要將 token 寫入 redux
+  static login(params) {
+  }
 
-    console.log('\x1b[36m%s\x1b[0m', '===getTestData===')
+  // 第三方註冊成功會自動回傳 token: 要將 token 寫入 redux
+  static register(params) {
+  }
 
-    return Api.get('/test.json')
+  // 登出: 要將 redux 中的 token 清除
+  static logout(params) {
   }
 }

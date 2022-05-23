@@ -15,8 +15,8 @@ import Tools from '../../utils/Tools'
 import Api from '../../services/Api'
 
 // Custom Components
-import BaseButton from '../global/BaseButton'
-import BaseModal from '../global/BaseModal'
+import BaseModal from '../base/BaseModal'
+import ExampleModal from '../modal/ExampleModal'
 
 // Images
 import Images from '../../../assets/images'
@@ -121,57 +121,60 @@ export default function ExampleComponent(props) {
   }
 
   return (
-    <ImageBackground
-      source={Images.example.backgroundImage}
-      resizeMode={'cover'}
-      style={{ flex: 1 }}
-      imageStyle={{ opacity: 0.9 }}>
-      <View style={globalStyles.pageContainer}>
+    <>
+      <ImageBackground
+        source={Images.example.backgroundImage}
+        resizeMode={'cover'}
+        style={{ flex: 1 }}
+        imageStyle={{ opacity: 0.9 }}>
+        <View style={globalStyles.pageContainer}>
 
-        {/* 並非所有元素都可以使用 style, 每個 View 預設都使用 flexBox */}
-        <Image resizeMode='cover' style={styles.image} source={Images.example.image}></Image>
+          {/* 並非所有元素都可以使用 style, 每個 View 預設都使用 flexBox */}
+          <Image resizeMode='cover' style={styles.image} source={Images.example.image}></Image>
 
-        <View style={styles.modalBtnGroup}>
-          <Button title='新增項目' onPress={openModal}></Button>
-          <Button title ="重置資料" onPress={clearListHandler} />
+          <View style={styles.modalBtnGroup}>
+            <Button title='新增項目' onPress={openModal}></Button>
+            <Button title ="重置資料" onPress={clearListHandler} />
+          </View>
+
+          <View style={styles.scrollViewStyle}>
+            {/*
+              ScrollView 會渲染他所有的子元素, 會吃效能要注意
+              FlatList 只會渲染可視範圍可以用來取代 ScrollView
+            */}
+            {/* <ScrollView alwaysBounceVertical={true}>
+              {renderScrollViewItem(testArr)}
+            </ScrollView> */}
+
+            <FlatList
+              data={testArr}
+              renderItem={(item) => renderFlatListItem(item)}
+              keyExtractor={(item) => item.id}
+              numberColumns={2}/>
+
+          </View>
         </View>
 
-        <View style={styles.scrollViewStyle}>
-          {/*
-            ScrollView 會渲染他所有的子元素, 會吃效能要注意
-            FlatList 只會渲染可視範圍可以用來取代 ScrollView
-          */}
-          {/* <ScrollView alwaysBounceVertical={true}>
-            {renderScrollViewItem(testArr)}
-          </ScrollView> */}
-
-          <FlatList
-            data={testArr}
-            renderItem={(item) => renderFlatListItem(item)}
-            keyExtractor={(item) => item.id}
-            numberColumns={2}/>
-
-        </View>
-      </View>
-
-      {/* props.children 有 slot 的功能 */}
-      <BaseModal showModal={showModal}>
-        <View style={styles.inputContainer}>
-          {/* onChangeText ReactNative 提供的事件監聽接口 */}
-          <TextInput
-            multiline
-            value={newItem}
-            onChangeText={inputHandler}
-            style={styles.textInput}
-            placeholder="placeholder" />
-        </View>
-        <View style={styles.buttonContainer}>
-          {/* Button 沒有 style & 沒有 onClick 而是 onPress 方法 */}
-          <Button title ="提交" onPress={addItemHandler} />
-          <Button title='取消' onPress={() => setShowModal(false)}></Button>
-        </View>
-      </BaseModal>
-    </ImageBackground>
+        {/* props.children 有 slot 的功能 */}
+        <BaseModal showModal={showModal}>
+          <View style={styles.inputContainer}>
+            {/* onChangeText ReactNative 提供的事件監聽接口 */}
+            <TextInput
+              multiline
+              value={newItem}
+              onChangeText={inputHandler}
+              style={styles.textInput}
+              placeholder="placeholder" />
+          </View>
+          <View style={styles.buttonContainer}>
+            {/* Button 沒有 style & 沒有 onClick 而是 onPress 方法 */}
+            <Button title ="提交" onPress={addItemHandler} />
+            <Button title='取消' onPress={() => setShowModal(false)}></Button>
+          </View>
+        </BaseModal>
+      </ImageBackground>
+      <ExampleModal></ExampleModal>
+    </>
   )
 }
 

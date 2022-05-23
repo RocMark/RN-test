@@ -7,7 +7,7 @@ import {
 import { useRoute } from '@react-navigation/native'
 
 // Components
-import ExampleComponent from '../components/example/ExampleComponent'
+import ExampleComponent from '../../components/example/ExampleComponent'
 
 // 不會變動的建議放在元件之外, 避免重新渲染吃掉不必要的資源
 const headerRightComponent = () => <Button title="123"></Button>
