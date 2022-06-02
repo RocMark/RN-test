@@ -2,9 +2,11 @@ import {
   StyleSheet, View
 } from 'react-native'
 
-export default function RegisterScreen({ route, navigation }) {
+// TODO 跳轉至系統設定頁面
+export default function RedirectToSystemBtn(props) {
   return (
     <View>
+
     </View>
   )
 }

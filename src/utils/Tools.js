@@ -1,4 +1,5 @@
 import uuid from 'react-native-uuid'
+import * as Device from 'expo-device'
 
 export default class Controller {
   // 用 index 將資料加上 id 作為 key
@@ -13,5 +14,10 @@ export default class Controller {
   // 取得 uuid
   static getUuid() {
     return uuid.v4()
+  }
+
+  // 是否為實體機
+  static deviceIsDevice() {
+    return Device.isDevice
   }
 }

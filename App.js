@@ -1,11 +1,20 @@
+import { useEffect } from 'react'
+
 // Components
 import { StatusBar } from 'expo-status-bar'
 import {
-  StyleSheet,
+  StyleSheet, View, SafeAreaView
 } from 'react-native'
 
-// Others
+// Service
 import { useFonts } from 'expo-font'
+
+// Navigation
+import { NavigationContainer } from '@react-navigation/native'
+
+// Notifications https://docs.expo.dev/versions/latest/sdk/notifications/
+import * as Notifications from 'expo-notifications'
+import NotificationService from './src/services/NotificationService'
 
 // Screens
 import SplashScreen from './src/screens/global/SplashScreen'
@@ -20,6 +29,9 @@ import ErrorOverlay from './src/components/global/ErrorOverlay'
 
 // Router
 import Router from './src/navigation/Router'
+
+// 初始化通知系統 並 請求通知的權限
+NotificationService.initEvents()
 
 // 載入字型, Redux, LoadingOverlay | ErrorOverlay
 export default function AppWrapper (props) {
@@ -44,31 +56,51 @@ export default function AppWrapper (props) {
   )
 }
 
-// 載入 LoadingOverlay | ErrorOverlay
+// TODO 載入 LoadingOverlay | ErrorOverlay (要改寫成 Z-index, 暫時不用此區塊)
+// https://stackoverflow.com/questions/41943191/how-to-use-zindex-in-react-native
 function OverlayWrapper(props) {
   const { children } = props
 
   const isFetching = useSelector((state) => state.global.isFetching)
   const errorMessage = useSelector((state) => state.global.errorMessage)
 
-  if (isFetching) {
-    return <LoadingOverlay></LoadingOverlay>
+  function getZIndexStyle(weight, style = {}) {
+    return {
+      ...style,
+      // flex: 1,
+      height: '100%',
+      zIndex: weight, // ios
+      elevation: weight, // android
+      borderColor: 'red',
+      borderWidth: 1,
+    }
   }
 
-  if (errorMessage && !isFetching) {
-    return <ErrorOverlay></ErrorOverlay>
-  }
+  // if (isFetching) {
+  //   return <LoadingOverlay></LoadingOverlay>
+  // }
+
+  // if (errorMessage && !isFetching) {
+  //   return <ErrorOverlay></ErrorOverlay>
+  // }
 
   return (
-    <>{children}</>
+    <>
+      <>{children}</>
+      {/* <View style={getZIndexStyle(1)}>{children}</View> */}
+      {/* <LoadingOverlay style={getZIndexStyle(999)}></LoadingOverlay> */}
+      {/* <ErrorOverlay style={getZIndexStyle(0)}></ErrorOverlay> */}
+    </>
   )
 }
 
 function App() {
   return (
-    <>
-      <Router></Router>
-    </>
+    <SafeAreaView style={styles.safeAreaViewStyle}>
+      <NavigationContainer>
+        <Router></Router>
+      </NavigationContainer>
+    </SafeAreaView>
   )
 }
 
@@ -77,5 +109,10 @@ const styles = StyleSheet.create({
   appContainer: {
     flex: 1, // 讓該容器取得整個畫面 (因為他是最外層)
     backgroundColor: '#fff',
+  },
+  // SafeAreaView 可避免 iOS 將內容渲染在瀏海的位置, backgroundColor 會填充瀏海部分
+  safeAreaViewStyle: {
+    flex: 1,
+    backgroundColor: '#000',
   },
 })

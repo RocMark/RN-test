@@ -11,7 +11,7 @@ import { clearErrorMessage } from '../../store/modules/global'
  * https://www.delftstack.com/howto/react/zindex-in-react-native/
  */
 export default function ErrorOverlay(props) {
-  const { message } = props
+  const { message, style } = props
 
   const dispatch = useDispatch()
 
@@ -20,7 +20,7 @@ export default function ErrorOverlay(props) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text>{message}</Text>
       <Button title='關閉' onPress={closeErrorOverlay}></Button>
     </View>

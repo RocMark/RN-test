@@ -6,6 +6,8 @@ import {
  * Styling 邏輯
  * 最外層將 Modal 置於中央, 內層 centeredView 將內容也置中
  * Modal 本身 transparent + 內層的 modalView => 組成浮動視窗的樣式
+ *
+ * TODO: 找一下如何用手勢關閉 Modal (往下滑關閉)
 */
 export default function BaseModal(props) {
   const { children, showModal } = props

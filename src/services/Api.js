@@ -7,6 +7,11 @@ import {
   setIsFetching, setErrorMessage
 } from '../store/modules/global'
 
+import {
+  logout
+} from '../store/modules/login'
+
+// TODO 可能有些 API 不需要 Loading 要看一下怎麼傳參數
 export default class Api {
 
   static request() {
@@ -50,6 +55,11 @@ export default class Api {
       },
       (error) => {
         const { response } = error
+
+        // TODO 將受到 Login Token 過期進行登出
+        const isLoginTokenExpired = false
+        if (isLoginTokenExpired) store.dispatch(logout())
+
         const statusCode = response.status
         const { errorMessage } = response.data
         return Promise.reject(error)
@@ -92,5 +102,11 @@ export default class Api {
 
   // 登出: 要將 redux 中的 token 清除
   static logout(params) {
+  }
+
+  // 傳送 Push Notification 用的 Device token 至後端
+  static storeDeviceToken(params) {
+    const { deviceToken, uid } = params
+    return Api.post('/push-notification-token', params)
   }
 }
